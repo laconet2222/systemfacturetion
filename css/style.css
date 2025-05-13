@@ -1,0 +1,45 @@
+
+body {
+  font-family: sans-serif;
+  background: #ffe4ec;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #ff66a3;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+nav a {
+  margin: 0 1em;
+  color: white;
+  text-decoration: none;
+}
+main {
+  padding: 2em;
+}
+form input, form textarea {
+  display: block;
+  width: 100%;
+  margin: 0.5em 0;
+  padding: 0.8em;
+}
+button {
+  background: #ff66a3;
+  color: white;
+  padding: 0.8em;
+  border: none;
+  cursor: pointer;
+}
+section {
+  background: white;
+  margin-bottom: 2em;
+  padding: 1em;
+  border-radius: 10px;
+}
+footer {
+  text-align: center;
+  padding: 1em;
+  background: #ff99bb;
+}

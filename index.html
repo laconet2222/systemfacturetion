@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jireh Beauty - Sistema de Facturación</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Jireh Beauty Salón Nails Bar</h1>
+    <nav>
+      <a href="#facturacion">Facturar</a>
+      <a href="#historial">Historial</a>
+      <a href="#config">Configuración</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="facturacion">
+      <h2>Generar Factura</h2>
+      <form id="invoiceForm">
+        <input type="text" id="cliente" placeholder="Nombre del cliente" required />
+        <input type="tel" id="telefono" placeholder="WhatsApp del cliente" required />
+        <textarea id="items" placeholder="Productos / Servicios" required></textarea>
+        <input type="number" id="total" placeholder="Total (RD$)" required />
+        <button type="submit">Enviar por WhatsApp</button>
+      </form>
+    </section>
+
+    <section id="historial">
+      <h2>Historial</h2>
+      <ul id="historialList"></ul>
+    </section>
+
+    <section id="config">
+      <h2>Configuración</h2>
+      <p>Solo el administrador puede acceder a estas funciones. (Expandible)</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Jireh Beauty Salón © 2025</p>
+  </footer>
+</body>
+</html>
