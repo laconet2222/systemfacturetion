@@ -25,11 +25,20 @@ document.getElementById('invoiceForm').addEventListener('submit', function (e) {
   // Generar el PDF y guardarlo en una variable
   const pdfData = doc.output('blob');
 
-  // Crear un enlace para descargar el PDF
+  // Crear un enlace para descargar el PDF (también lo guardamos para WhatsApp)
   const link = document.createElement('a');
   link.href = URL.createObjectURL(pdfData);
   link.download = `Factura_${cliente}_${new Date().toISOString()}.pdf`; // Nombre del archivo PDF
+
+  // Al hacer clic en este enlace, descargará el PDF automáticamente
   link.click();
+
+  // También podemos abrir WhatsApp con el mensaje de la factura
+  const mensaje = `Factura enviada a ${cliente}\nDetalles: ${items}\nTotal: RD$ ${total}\nJireh Beauty Salón Nails Bar`;
+  const whatsappURL = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+
+  // Abrir WhatsApp para enviar el mensaje (no el PDF)
+  window.open(whatsappURL, '_blank');
 
   // Guardar la factura en el historial (como lo hacíamos antes)
   const factura = {
@@ -72,4 +81,8 @@ function mostrarHistorial() {
 
 // Función para descargar PDF desde el historial
 function descargarFactura(pdfData) {
-  const link = document.createElement('a
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(pdfData);
+  link.download = `Factura_${new Date().toISOString()}.pdf`;
+  link.click();
+}
