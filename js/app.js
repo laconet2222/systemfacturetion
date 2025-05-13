@@ -6,29 +6,47 @@ document.getElementById('invoiceForm').addEventListener('submit', function (e) {
   const items = document.getElementById('items').value;
   const total = document.getElementById('total').value;
 
-  // Crear el mensaje para WhatsApp
-  const mensaje = `Hola ${cliente}, gracias por visitarnos. Tu factura:\n${items}\nTotal: RD$${total}`;
-  const link = `https://api.whatsapp.com/send?phone=1${telefono}&text=${encodeURIComponent(mensaje)}`;
+  // Crear el PDF con la librería jsPDF
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-  // Abrir WhatsApp con el mensaje
-  window.open(link, '_blank');
+  // Agregar el contenido de la factura al PDF
+  doc.setFontSize(18);
+  doc.text("Factura Electrónica", 20, 20);
+  doc.setFontSize(14);
+  doc.text(`Nombre del Cliente: ${cliente}`, 20, 30);
+  doc.text(`Teléfono: ${telefono}`, 20, 40);
+  doc.text(`Detalles de la Factura:`, 20, 50);
+  doc.text(items, 20, 60);
+  doc.text(`Total: RD$ ${total}`, 20, 70);
+  doc.text("Jireh Beauty Salón Nails Bar", 20, 80); // Nombre del salón
+  doc.text("www.jirehbeautysalon.com", 20, 90); // Página web del salón o cualquier información adicional
 
-  // Guardar la factura en el historial
+  // Generar el PDF y guardarlo en una variable
+  const pdfData = doc.output('blob');
+
+  // Crear un enlace para descargar el PDF
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(pdfData);
+  link.download = `Factura_${cliente}_${new Date().toISOString()}.pdf`; // Nombre del archivo PDF
+  link.click();
+
+  // Guardar la factura en el historial (como lo hacíamos antes)
   const factura = {
     cliente,
     telefono,
     items,
     total,
-    mensaje,
-    fecha: new Date().toLocaleString()
+    mensaje: `Factura enviada a ${cliente}`,
+    fecha: new Date().toLocaleString(),
+    pdfData
   };
 
-  // Obtener historial de facturas (si existe)
   let historial = JSON.parse(localStorage.getItem('historial')) || [];
   historial.push(factura);
   localStorage.setItem('historial', JSON.stringify(historial));
 
-  // Mostrar el historial en la página
+  // Mostrar el historial
   mostrarHistorial();
 
   // Resetear el formulario
@@ -45,12 +63,13 @@ function mostrarHistorial() {
     const li = document.createElement('li');
     li.innerHTML = `
       <strong>${factura.cliente}</strong> - RD$${factura.total} 
-      <br><em>${factura.fecha}</em> 
-      <br><small>Detalles: ${factura.items}</small>
+      <br><em>${factura.fecha}</em>
+      <br><button onclick="descargarFactura(${factura.pdfData})">Descargar PDF</button>
     `;
     historialList.appendChild(li);
   });
 }
 
-// Mostrar historial al cargar la página
-mostrarHistorial();
+// Función para descargar PDF desde el historial
+function descargarFactura(pdfData) {
+  const link = document.createElement('a
